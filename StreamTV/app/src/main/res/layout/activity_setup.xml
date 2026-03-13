@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\u25BA STREAMTV"
+            android:textSize="36sp"
+            android:textColor="@color/accent"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\u041b\u042e\u0411\u041e\u0419 \u0421\u0410\u0419\u0422 — \u041a\u0410\u041a \u0422\u0415\u041b\u0415\u0412\u0418\u0414\u0415\u041d\u0418\u0415"
+            android:textSize="10sp"
+            android:textColor="@color/text_muted"
+            android:layout_marginBottom="48dp"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/bg_secondary"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+                <EditText
+                    android:id="@+id/input_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_input"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_muted"
+                    android:hint="https://www.lostfilm.tv/"
+                    android:text="https://www.lostfilm.tv/"
+                    android:inputType="textUri"
+                    android:singleLine="true"
+                    android:fontFamily="monospace"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="16dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
+                    <Button android:id="@+id/preset_lostfilm"
+                        style="@style/PresetButton"
+                        android:layout_weight="1"
+                        android:text="LostFilm"/>
+                    <Button android:id="@+id/preset_rezka"
+                        style="@style/PresetButton"
+                        android:layout_weight="1"
+                        android:text="HDRezka"/>
+                    <Button android:id="@+id/preset_kinogo"
+                        style="@style/PresetButton"
+                        android:layout_weight="1"
+                        android:text="Kinogo"/>
+                    <Button android:id="@+id/preset_anime"
+                        style="@style/PresetButton"
+                        android:layout_weight="1"
+                        android:text="AnimeGo"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/btn_launch"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="\u25BA  ЗАПУСТИТЬ"
+                    android:background="@color/accent"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="12dp"/>
+                <Button
+                    android:id="@+id/btn_demo"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:text="Демо-режим"
+                    android:textColor="@color/text_muted"
+                    android:background="@drawable/bg_btn_outline"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,3 @@
+-keep class com.streamtv.** { *; }
+-dontwarn okhttp3.**
+-dontwarn org.jsoup.**

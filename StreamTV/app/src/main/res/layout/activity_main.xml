@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- TOPBAR -->
+    <LinearLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="@color/bg_primary"
+        android:elevation="4dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\u25BA STREAMTV"
+            android:textSize="16sp"
+            android:textColor="@color/accent"
+            android:fontFamily="monospace"
+            android:layout_marginEnd="12dp"/>
+        <View android:layout_width="6dp" android:layout_height="6dp"
+            android:background="@drawable/live_dot"/>
+        <TextView
+            android:id="@+id/tv_source_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="lostfilm.tv"
+            android:textSize="11sp"
+            android:textColor="@color/text_muted"
+            android:background="@drawable/bg_chip"
+            android:paddingStart="12dp" android:paddingEnd="12dp"
+            android:paddingTop="4dp" android:paddingBottom="4dp"
+            android:layout_marginStart="8dp"/>
+        <Button android:id="@+id/quick_ch0" style="@style/QuickChBtn" android:layout_marginStart="8dp" android:text="CH1"/>
+        <Button android:id="@+id/quick_ch1" style="@style/QuickChBtn" android:text="CH2"/>
+        <Button android:id="@+id/quick_ch2" style="@style/QuickChBtn" android:text="CH3"/>
+        <Button android:id="@+id/quick_ch3" style="@style/QuickChBtn" android:text="CH4"/>
+        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:textSize="13sp"
+            android:textColor="@color/text_muted"
+            android:fontFamily="monospace"/>
+    </LinearLayout>
+
+    <!-- LOADING -->
+    <FrameLayout
+        android:id="@+id/loading_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+            <ProgressBar
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:indeterminateTint="@color/accent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Загружаем каналы..."
+                android:textColor="@color/text_muted"
+                android:textSize="13sp"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- MAIN CONTENT -->
+    <LinearLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <!-- SIDEBAR -->
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/bg_secondary">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp" android:paddingEnd="16dp"
+                android:background="@color/bg_secondary">
+                <TextView
+                    android:layout_width="0dp" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="КАНАЛЫ"
+                    android:textSize="9sp"
+                    android:textColor="@color/text_muted"
+                    android:letterSpacing="0.3"
+                    android:fontFamily="monospace"/>
+                <TextView
+                    android:id="@+id/tv_channel_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="9sp"
+                    android:textColor="@color/text_muted"
+                    android:fontFamily="monospace"/>
+            </LinearLayout>
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_channels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"/>
+        </LinearLayout>
+
+        <!-- RIGHT PANEL -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- PLAYER PREVIEW -->
+            <FrameLayout
+                android:id="@+id/player_preview"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="#000000"
+                android:clickable="true"
+                android:focusable="true">
+
+                <!-- Scanlines overlay -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/scanlines"
+                    android:alpha="0.15"/>
+
+                <!-- Now playing info at bottom -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:background="@drawable/gradient_bottom">
+                    <TextView
+                        android:id="@+id/tv_now_channel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="КАНАЛ"
+                        android:textSize="10sp"
+                        android:textColor="@color/accent"
+                        android:letterSpacing="0.2"
+                        android:fontFamily="monospace"
+                        android:layout_marginBottom="4dp"/>
+                    <TextView
+                        android:id="@+id/tv_now_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Загрузка..."
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="3dp"/>
+                    <TextView
+                        android:id="@+id/tv_now_episode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="11sp"
+                        android:textColor="#888888"/>
+                </LinearLayout>
+
+                <!-- Progress bar -->
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="bottom"
+                    android:progressTint="@color/accent"
+                    android:progressBackgroundTint="@color/bg_tertiary"
+                    android:max="100"
+                    android:progress="0"/>
+
+                <!-- Top badge: channel + LIVE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="14dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/gradient_top">
+                    <TextView
+                        android:id="@+id/tv_ch_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="— Канал —"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_primary"
+                        android:background="@drawable/bg_chip_dark"
+                        android:paddingStart="10dp" android:paddingEnd="10dp"
+                        android:paddingTop="4dp" android:paddingBottom="4dp"/>
+                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="\u25CF ЭФИР"
+                        android:textSize="9sp"
+                        android:textColor="@color/white"
+                        android:background="@color/accent"
+                        android:paddingStart="8dp" android:paddingEnd="8dp"
+                        android:paddingTop="3dp" android:paddingBottom="3dp"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- CONTROLS BAR -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp" android:paddingEnd="16dp"
+                android:background="@color/bg_secondary">
+                <Button android:id="@+id/btn_prev_ch"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="\u2329 Пред."
+                    android:textSize="11sp" android:textColor="@color/text_muted"
+                    android:background="@drawable/bg_btn_outline"
+                    android:paddingStart="12dp" android:paddingEnd="12dp"
+                    android:layout_marginEnd="8dp"/>
+                <Button android:id="@+id/btn_watch"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="\u25BA  Смотреть"
+                    android:textSize="11sp" android:textColor="@color/white"
+                    android:background="@color/accent"
+                    android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:layout_marginEnd="8dp"/>
+                <Button android:id="@+id/btn_next_ch"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:text="След. \u232a"
+                    android:textSize="11sp" android:textColor="@color/text_muted"
+                    android:background="@drawable/bg_btn_outline"
+                    android:paddingStart="12dp" android:paddingEnd="12dp"
+                    android:layout_marginEnd="16dp"/>
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/volume_slider"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0"
+                    android:valueTo="100"
+                    android:value="70"
+                    app:thumbColor="@color/accent"
+                    app:trackColorActive="@color/accent"
+                    app:trackColorInactive="@color/border"/>
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_time_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="— осталось"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_muted"
+                    android:fontFamily="monospace"/>
+            </LinearLayout>
+
+            <!-- EPG PANEL -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!-- EPG Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="20dp" android:paddingEnd="20dp">
+                    <TextView
+                        android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="ПРОГРАММА ПЕРЕДАЧ"
+                        android:textSize="9sp"
+                        android:textColor="@color/text_muted"
+                        android:letterSpacing="0.3"
+                        android:fontFamily="monospace"/>
+                    <Button android:id="@+id/tab_today"
+                        style="@style/EpgTabBtn"
+                        android:text="Сегодня"
+                        android:selected="true"
+                        android:layout_marginEnd="6dp"/>
+                    <Button android:id="@+id/tab_tomorrow"
+                        style="@style/EpgTabBtn"
+                        android:text="Завтра"/>
+                    <TextView
+                        android:id="@+id/tv_epg_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="10sp"
+                        android:textColor="@color/text_muted2"
+                        android:layout_marginStart="12dp"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/border"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_epg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="20dp"
+                    android:clipToPadding="false"
+                    android:scrollbars="none"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
