@@ -301,7 +301,7 @@
                     <Button android:id="@+id/tab_today"
                         style="@style/EpgTabBtn"
                         android:text="Сегодня"
-                        android:selected="true"
+                        
                         android:layout_marginEnd="6dp"/>
                     <Button android:id="@+id/tab_tomorrow"
                         style="@style/EpgTabBtn"
