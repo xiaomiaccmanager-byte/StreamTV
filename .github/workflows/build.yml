@@ -3,7 +3,7 @@ name: Build StreamTV APK
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch:   # кнопка ручного запуска
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,23 +22,25 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.4'
-
-      - name: Generate Gradle wrapper
-        run: gradle wrapper --gradle-version 8.4
-
-      - name: Grant Gradle execute permission
-        run: chmod +x gradlew
-
-      - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Find project and build
+        run: |
+          # Ищем папку где лежит settings.gradle
+          PROJECT=$(dirname $(find . -name "settings.gradle" | head -1))
+          echo "Found project at: $PROJECT"
+          cd $PROJECT
+          
+          # Скачиваем gradle wrapper
+          curl -L https://services.gradle.org/distributions/gradle-8.4-bin.zip -o gradle.zip
+          unzip -q gradle.zip
+          ./gradle-8.4/bin/gradle wrapper
+          chmod +x gradlew
+          
+          # Собираем APK
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: StreamTV-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: '**/app-debug.apk'
           retention-days: 7
